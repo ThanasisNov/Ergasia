@@ -1,6 +1,4 @@
-import Accounts.AccountManager;
-import Accounts.ShowAccounts;
-import Accounts.ShowInbox;
+import Accounts.*;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -24,6 +22,13 @@ public class Server {
 
             ShowInbox stub3 = new ShowInbox(stub2.getMessagesb1());//
             rmiRegistry.rebind("Inbox", stub3);//showing Messages*/
+
+            ReadMessage stub4 = new ReadMessage(stub3.show());//
+            rmiRegistry.rebind("Open", stub4);//open Messages*/
+
+
+            DeleteMessage stub5 = new DeleteMessage(stub3.show());//
+            rmiRegistry.rebind("Delete", stub5);//Delete Messages*/
 
             System.out.println("Server is ready");
         } catch (RemoteException e) {

@@ -14,8 +14,7 @@ public class ShowInbox extends UnicastRemoteObject implements ShowInboxInt {
 
     @Override
     public  HashMap<Integer,List<Message>> show() throws RemoteException {
-
-System.out.println("This is it!");
+        System.out.println("Sending Inbox...");
         return a1;
     }
 }

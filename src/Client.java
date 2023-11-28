@@ -75,16 +75,6 @@ public class Client {
             {
                 System.out.println("Showing Inbox...");
                 ShowInboxInt stub = (ShowInboxInt)  rmiRegistry.lookup("Inbox");
-              /*  System.out.println("HERE1 "+arg[0]);
-                System.out.println(stub.show().isEmpty());
-                Set<Integer> keys = stub.show().keySet();
-                System.out.println("WoW");
-                // Now you can iterate over the set of keys
-                for (Integer key : keys) {
-                    System.out.println("WoW123");
-                    System.out.println(key);
-                }
-                System.out.println("HERE");*/
                 List<Message> a = stub.show().get(Integer.parseInt(arg[0]));
                 for(Message b: a)
                   {
@@ -98,10 +88,21 @@ public class Client {
             else if (Objects.equals(FN_ID, "5"))
             {
                 System.out.println("Showing Accounts.Message...");
+                ReadMessageInt stub = (ReadMessageInt)  rmiRegistry.lookup("Open");
+                if(stub.showMessage(Integer.parseInt(arg[0]),Integer.parseInt(arg[1]))==null)
+                {
+                    System.out.println("Message "+arg[1]+" does not exist");
+                }
+                else
+                {
+                    System.out.println(stub.showMessage(Integer.parseInt(arg[0]),Integer.parseInt(arg[1])));
+                }
             }
             else if (Objects.equals(FN_ID, "6"))
             {
                 System.out.println("Deleting Accounts.Message...");
+               DeleteMessageInt stub = (DeleteMessageInt)  rmiRegistry.lookup("Delete");
+              System.out.println(stub.Delete_Message(Integer.parseInt(arg[0]),Integer.parseInt(arg[1])));
             }
 
         } catch (Exception e) {
