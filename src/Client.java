@@ -3,6 +3,8 @@ import Accounts.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.*;
+
+import static java.lang.System.exit;
 // To change the 2 input parameters (double numbers) in Intellij go to: Edit Configurations -> Client -> Built and Run
 
 public class Client {
@@ -59,6 +61,11 @@ public class Client {
             else if (Objects.equals(FN_ID, "3"))
             {
                 System.out.println("Sending Message...");
+                if(arg.length==2)
+                {
+                    System.out.println("Enter Message --> \"message\"!");
+                    exit(0);
+                }
                 SendMessageInt stub = (SendMessageInt)  rmiRegistry.lookup("Send");
                if( stub.sendMessage(Integer.parseInt(arg[0]),arg[1],arg[2]))
                 {
@@ -74,8 +81,25 @@ public class Client {
             else if (Objects.equals(FN_ID, "4"))
             {
                 System.out.println("Showing Inbox...");
+                if(arg.length==0)
+                {
+                    System.out.println("EMPTY AUTHTOKEN!");
+                    exit(0);
+                }
                 ShowInboxInt stub = (ShowInboxInt)  rmiRegistry.lookup("Inbox");
+                if(stub.show()==null )
+                {
+                    System.out.println("Users have not been initialized");
+                    exit(0);
+                }
+
+                if(stub.show().get(Integer.parseInt(arg[0]))==null )
+                {
+                    System.out.println("Wrong User!");
+                    exit(0);
+                }
                 List<Message> a = stub.show().get(Integer.parseInt(arg[0]));
+
                 for(Message b: a)
                   {
 
@@ -87,7 +111,7 @@ public class Client {
             }
             else if (Objects.equals(FN_ID, "5"))
             {
-                System.out.println("Showing Accounts.Message...");
+                System.out.println("Showing Account Message...");
                 ReadMessageInt stub = (ReadMessageInt)  rmiRegistry.lookup("Open");
                 if(stub.showMessage(Integer.parseInt(arg[0]),Integer.parseInt(arg[1]))==null)
                 {

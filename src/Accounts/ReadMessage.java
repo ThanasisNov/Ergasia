@@ -16,17 +16,22 @@ public class ReadMessage extends UnicastRemoteObject implements ReadMessageInt{
     public String showMessage(int authToken,int message_id)
     {
         System.out.println("Reading Message...");
+        if(a1.isEmpty()) return null;
         List<Message> a = a1.get(authToken);
+        if(a.isEmpty()) return null;
         int   i=0;
         String message = null;
+        System.out.println("?3");
       for(Message b: a)
       {
-
+          System.out.println("?2");
           if(b.getMessage_ID()==message_id)
           {
+              System.out.println("?1");
               message="("+b.getSender()+")"+b.getBody();
               break;
           }
+          System.out.println("?");
           i++;
 
       }

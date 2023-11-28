@@ -1,5 +1,7 @@
-import Accounts.AccountManager;
+package Accounts;
+
 import Accounts.Message;
+import Accounts.SendMessageInt;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -30,7 +32,7 @@ public class SendMessage extends UnicastRemoteObject implements SendMessageInt {
   @Override
     public boolean sendMessage(int sender, String receiver, String Message)
     {
-
+if(Message.isEmpty() ) Message="Empty Message";
         //System.out.println(a1.containsKey(sender) +"---"+a1.containsValue(receiver)+"Receiver->"+receiver);
 if(a1.containsKey(sender) && a1.containsValue(receiver))
 {
@@ -42,24 +44,24 @@ if(a1.containsKey(sender) && a1.containsValue(receiver))
             break; // If you want only the first match, you can break the loop here
         }
     }
-//System.out.println(keyForValue +"<--"+receiver);
+
 
    int randomNum;
-  // System.out.println("This is the problem2");
+
     Random random= new Random();
     do {
         randomNum = random.nextInt(9999 + 1);
-   //  System.out.println("This is the problem3");
+
 
     } while ( messages.containsKey(randomNum));
-  //  System.out.println("This is the problem1");
+
     Message mail= new Message();
     mail.setSender(a1.get(sender));
     mail.setReceiver(receiver);
     mail.setBody(Message);
     mail.setRead(false);
     mail.setMessage_ID(randomNum);
-   //System.out.println("This is the problem");
+
     messages.put(randomNum,mail);//used to make use that the same number will not be used
 
     b1.get(keyForValue).add(mail);//HashMap
@@ -70,7 +72,7 @@ if(a1.containsKey(sender) && a1.containsValue(receiver))
 }
 else
 {
-    System.out.println("Something went Wrong in SendMessage");
+    System.out.println("Something went Wrong in Accounts.SendMessage");
     return false;
 }
 

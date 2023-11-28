@@ -1,3 +1,5 @@
+package Accounts;
+
 import Accounts.Message;
 
 import java.rmi.Remote;
