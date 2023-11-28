@@ -2,14 +2,18 @@ package Accounts;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class AccountManager  extends UnicastRemoteObject implements AccountManagerInt {
 
 
     private  int randomNum;
-HashMap<Integer,String> Accounts= new HashMap<>();
+
+     HashMap<Integer,String> Accounts= new HashMap<>();
+     HashMap<Integer, List<Message>> MessageBox= new HashMap<>();
     public AccountManager() throws RemoteException {
     }
 
@@ -17,8 +21,8 @@ HashMap<Integer,String> Accounts= new HashMap<>();
     public boolean CreateAccount(String a) throws RemoteException {
         String regex = "^[a-zA-Z0-9-]+$";
 
-       System.out.println(a.matches(regex));
-       System.out.println("What?");
+
+
         if (Accounts.containsValue(a) || !a.matches(regex)) {
             System.out.println("Failed to create user");
             return false;
@@ -32,17 +36,14 @@ HashMap<Integer,String> Accounts= new HashMap<>();
         setAuth(randomNum);
         System.out.println("User Created");
         Accounts.put(randomNum,a);
+        List<Message> b= new ArrayList<>();
+        MessageBox.put(randomNum,b);
         return true;
     }
 
     @Override
     public int getAuth() throws RemoteException {
-        /*int i=0;
-        for (String value : Accounts.values())
-        {
-            System.out.println(i+"."+value);
-            i++;
-        }*/
+
         return randomNum;
 
     }
@@ -54,10 +55,13 @@ HashMap<Integer,String> Accounts= new HashMap<>();
     }
 
     @Override
-    public HashMap getAccounts() throws RemoteException {
+    public HashMap<Integer,String> getAccounts() throws RemoteException {
         return Accounts;
     }
 
+    public HashMap<Integer,List<Message>> getMessageBox() throws RemoteException {
+        return MessageBox;
+    }
 
 }
 

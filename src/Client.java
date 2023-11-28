@@ -1,12 +1,8 @@
-import Accounts.AccountManagerInt;
-import Accounts.ShowAccounts;
-import Accounts.ShowAccountsInt;
+import Accounts.*;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 // To change the 2 input parameters (double numbers) in Intellij go to: Edit Configurations -> Client -> Built and Run
 
 public class Client {
@@ -62,19 +58,50 @@ public class Client {
 
             else if (Objects.equals(FN_ID, "3"))
             {
-                System.out.println("Showing Accounts...");
+                System.out.println("Sending Message...");
+                SendMessageInt stub = (SendMessageInt)  rmiRegistry.lookup("Send");
+               if( stub.sendMessage(Integer.parseInt(arg[0]),arg[1],arg[2]))
+                {
+                    System.out.println("Message Send");
+                }
+               else
+               {
+                   System.out.println("Wrong info!Check Sender and Receiver!");
+               }
+
+
             }
             else if (Objects.equals(FN_ID, "4"))
             {
                 System.out.println("Showing Inbox...");
+                ShowInboxInt stub = (ShowInboxInt)  rmiRegistry.lookup("Inbox");
+              /*  System.out.println("HERE1 "+arg[0]);
+                System.out.println(stub.show().isEmpty());
+                Set<Integer> keys = stub.show().keySet();
+                System.out.println("WoW");
+                // Now you can iterate over the set of keys
+                for (Integer key : keys) {
+                    System.out.println("WoW123");
+                    System.out.println(key);
+                }
+                System.out.println("HERE");*/
+                List<Message> a = stub.show().get(Integer.parseInt(arg[0]));
+                for(Message b: a)
+                  {
+
+                      String read="";
+                      if(!b.isRead()) read="*";
+                      System.out.println(b.getMessage_ID()+".  from:"+b.getSender()+read);
+                  }
+
             }
             else if (Objects.equals(FN_ID, "5"))
             {
-                System.out.println("Showing Message...");
+                System.out.println("Showing Accounts.Message...");
             }
             else if (Objects.equals(FN_ID, "6"))
             {
-                System.out.println("Deleting Message...");
+                System.out.println("Deleting Accounts.Message...");
             }
 
         } catch (Exception e) {

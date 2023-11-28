@@ -13,6 +13,7 @@ private HashMap b;
     @Override
     public HashMap show() throws RemoteException
     {
+        System.out.println("Displaying accounts...");
        return b;
     }
 }
