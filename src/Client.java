@@ -10,9 +10,28 @@ import static java.lang.System.exit;
 public class Client {
     public static void main(String args[]) {
         try {
+            if(args.length<3)
+            {
+                System.out.println("Something is missing");
+                System.out.println("Tip:java client <ip> <port number> <FN_ID> <args-Note:enter a number first>!");
+                exit(0);
+            }
+
             String ip =  args[0];;
             String  port = args[1];;
             String FN_ID =  args[2];
+if(Integer.parseInt(FN_ID)<=0 ||  Integer.parseInt(FN_ID)>6)
+{
+    System.out.println("Manual:");
+    System.out.println("Create Account (FN_ID: 1)");
+    System.out.println("Show Accounts (FN_ID: 2)");
+    System.out.println("Send Message (FN_ID: 3)");
+    System.out.println("Show Inbox (FN_ID: 4)");
+    System.out.println("ReadMessage (FN_ID: 5)");
+    System.out.println("DeleteMessage (FN_ID: 6)");
+    exit(0);
+}
+
 
             String[] arg = new String[args.length - 3];
             for (int i = 3; i < args.length; i++) {
@@ -21,7 +40,7 @@ public class Client {
 
             // Converting additional arguments array to a string for display
 
-          //  System.out.println(ip+" "+port +" "+FN_ID+"-->"+ Arrays.toString(arg));
+
 
             // connect to the RMI registry
 
@@ -29,6 +48,12 @@ public class Client {
 
             if(Objects.equals(FN_ID, "1")) {
 
+            if(arg.length==0)
+            {
+                System.out.println("Enter a valid name" );
+                System.out.println("Tip:java client <ip> <port number> 1 <username>" );
+                exit(0);
+            }
 
                 AccountManagerInt stub = (AccountManagerInt) rmiRegistry.lookup("Create");
                 // get reference for remote object
@@ -46,9 +71,22 @@ public class Client {
 
             else if (Objects.equals(FN_ID, "2"))
             {
+                if(arg.length==0)
+                {
+                    System.out.println("Empty authToken" );
+                    System.out.println("Tip:java client <ip> <port number> 2 <authToken>");
+                    exit(0);
+                }
+
                 System.out.println("Showing Accounts...");
+
                 ShowAccountsInt stub = (ShowAccountsInt) rmiRegistry.lookup("Show");
                  HashMap b=stub.show();
+                 if(!b.containsKey(Integer.parseInt(arg[0])))
+                {
+                    System.out.println("Wrong authToken ");
+                    exit(0);
+                }
                 int i=0;
                 for (Object value : b.values())
                 {
@@ -60,6 +98,12 @@ public class Client {
 
             else if (Objects.equals(FN_ID, "3"))
             {
+                if(arg.length<2)
+                {
+                    System.out.println("Empty authToken or recipient" );
+                    System.out.println("Tip:java client <ip> <port number> 3 <authToken> <recipient> <message_body>");
+                    exit(0);
+                }
                 System.out.println("Sending Message...");
                 if(arg.length==2)
                 {
@@ -80,12 +124,16 @@ public class Client {
             }
             else if (Objects.equals(FN_ID, "4"))
             {
+
                 System.out.println("Showing Inbox...");
                 if(arg.length==0)
                 {
-                    System.out.println("EMPTY AUTHTOKEN!");
+                    System.out.println("Empty  authToken");
+                    System.out.println("Tip:java client <ip> <port number> 4 <authToken>");
+
                     exit(0);
                 }
+
                 ShowInboxInt stub = (ShowInboxInt)  rmiRegistry.lookup("Inbox");
                 if(stub.show()==null )
                 {
@@ -111,6 +159,13 @@ public class Client {
             }
             else if (Objects.equals(FN_ID, "5"))
             {
+                if(arg.length<2)
+                {
+                    System.out.println("Empty authToken or message_id" );
+                    System.out.println("Tip:java client <ip> <port number> 5 <authToken> <message_id>");
+
+                    exit(0);
+                }
                 System.out.println("Showing Account Message...");
                 ReadMessageInt stub = (ReadMessageInt)  rmiRegistry.lookup("Open");
                 if(stub.showMessage(Integer.parseInt(arg[0]),Integer.parseInt(arg[1]))==null)
@@ -124,7 +179,13 @@ public class Client {
             }
             else if (Objects.equals(FN_ID, "6"))
             {
-                System.out.println("Deleting Accounts.Message...");
+                if(arg.length<2)
+                {
+                    System.out.println("Empty authToken or message_id" );
+                    System.out.println("Tip:java client <ip> <port number> 6 <authToken> <message_id>");
+                    exit(0);
+                }
+                System.out.println("Deleting Account's Message...");
                DeleteMessageInt stub = (DeleteMessageInt)  rmiRegistry.lookup("Delete");
               System.out.println(stub.Delete_Message(Integer.parseInt(arg[0]),Integer.parseInt(arg[1])));
             }

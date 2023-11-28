@@ -21,21 +21,21 @@ public class ReadMessage extends UnicastRemoteObject implements ReadMessageInt{
         if(a.isEmpty()) return null;
         int   i=0;
         String message = null;
-        System.out.println("?3");
+
       for(Message b: a)
       {
-          System.out.println("?2");
+
           if(b.getMessage_ID()==message_id)
           {
-              System.out.println("?1");
+
               message="("+b.getSender()+")"+b.getBody();
+              a1.get(authToken).get(i).setRead(true);//Message read
               break;
           }
-          System.out.println("?");
           i++;
 
       }
-        a1.get(authToken).get(i).setRead(true);//Message read
+
         return message;
     }
 }

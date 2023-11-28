@@ -30,6 +30,6 @@ public class DeleteMessage extends UnicastRemoteObject implements DeleteMessageI
 
         }
 
-        return "Message does not exist";
+        return "Message "+message_id+" does not exist";
     }
 }
