@@ -18,7 +18,9 @@ public class ReadMessage extends UnicastRemoteObject implements ReadMessageInt{
         System.out.println("Reading Message...");
         if(a1.isEmpty()) return null;
         List<Message> a = a1.get(authToken);
-        if(a.isEmpty()) return null;
+        System.out.println("test");
+        if(a==null) return null;
+        System.out.println("test1");
         int   i=0;
         String message = null;
 
