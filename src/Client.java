@@ -192,6 +192,21 @@ if(Integer.parseInt(FN_ID)<=0 ||  Integer.parseInt(FN_ID)>6)
 
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("Manual:");
+            System.out.println("Create Account (FN_ID: 1)--> java client <ip> <port number> 1 <username> ");
+            System.out.println("Show Accounts (FN_ID: 2)-->java client <ip> <port number> 2 <authToken>");
+            System.out.println("Send Message (FN_ID: 3)-->java client <ip> <port number> 3 <authToken> <recipient> <message_body>");
+            System.out.println("Show Inbox (FN_ID: 4)-->java client <ip> <port number> 4 <authToken>");
+            System.out.println("ReadMessage (FN_ID: 5)-->java client <ip> <port number> 5 <authToken> <message_id>");
+            System.out.println("DeleteMessage (FN_ID: 6)-->java client <ip> <port number> 6 <authToken> <message_id>");
+            System.out.println("Notes:");
+            System.out.println("ip is String  etc localhost ,127.0.0.1 ...");
+            System.out.println("port number is Integer");
+            System.out.println("username is String");
+            System.out.println("authToken is Integer");
+            System.out.println("recipient is String");
+            System.out.println("message body is String ,use \"text\" ");
+            System.out.println("message_id is Integer");
         }
     }
 }
